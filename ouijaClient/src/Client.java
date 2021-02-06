@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 
@@ -13,12 +10,14 @@ public class Client {
 
             Socket socket = new Socket("localhost" ,5050);
 
+            var ouijaOutput = new PrintWriter(socket.getOutputStream());
+                ouijaOutput.println("Server is listening!");
+                ouijaOutput.flush();
+
             var ouijaInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             System.out.println(ouijaInput.readLine());
 
-            var ouijaOutput = new PrintWriter(socket.getOutputStream());
-            ouijaOutput.println("Server is listening!");
-            ouijaOutput.flush();
+            var ouijaDataOutput = new DataOutputStream(socket.getOutputStream());
 
         } catch (IOException e) {
             e.printStackTrace();
